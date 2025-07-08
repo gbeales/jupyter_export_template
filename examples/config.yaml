@@ -1,0 +1,24 @@
+# Example configuration file for batch notebook export
+# Usage: jupyter-export --config config.yaml
+
+exports:
+  - input: "examples/test_notebook.ipynb"
+    output: "examples/batch_output_default.html"
+    template: "default.j2"
+    context:
+      title: "Batch Exported Notebook - Default Style"
+
+  - input: "examples/test_notebook.ipynb"
+    output: "examples/batch_output_minimal.html"
+    template: "minimal.j2"
+    context:
+      title: "Batch Exported Notebook - Minimal Style"
+
+  - input: "examples/test_notebook.ipynb"
+    output: "examples/batch_output_academic.html"
+    template: "academic.j2"
+    context:
+      title: "Research Paper: Jupyter Export Template Demo"
+      authors: ["John Doe", "Jane Smith"]
+      affiliation: "Example University"
+      abstract: "This paper demonstrates the jupyter-export-template package capabilities through various examples and test cases."

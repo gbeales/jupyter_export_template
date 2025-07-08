@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ notebook.metadata.title or "Notebook Export" }}</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', serif;
+            line-height: 1.8;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background-color: #ffffff;
+            color: #000000;
+        }
+
+        .paper-header {
+            text-align: center;
+            border-bottom: 1px solid #333;
+            padding-bottom: 30px;
+            margin-bottom: 40px;
+        }
+
+        .paper-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 0 0 20px 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .paper-authors {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .paper-affiliation {
+            font-size: 14px;
+            font-style: italic;
+            color: #666;
+        }
+
+        .abstract {
+            background-color: #f9f9f9;
+            padding: 20px;
+            margin: 30px 0;
+            border-left: 4px solid #333;
+        }
+
+        .abstract-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            font-size: 14px;
+            letter-spacing: 1px;
+        }
+
+        .cell {
+            margin-bottom: 25px;
+        }
+
+        .section-number {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: bold;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+
+        h1 { font-size: 20px; }
+        h2 { font-size: 18px; }
+        h3 { font-size: 16px; }
+
+        .code-cell {
+            page-break-inside: avoid;
+        }
+
+        .code-input {
+            background-color: #f8f8f8;
+            border: 1px solid #ddd;
+            padding: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+
+        .cell-output {
+            background-color: #ffffff;
+            border: 1px solid #ccc;
+            padding: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+        }
+
+        .figure {
+            text-align: center;
+            margin: 20px 0;
+            page-break-inside: avoid;
+        }
+
+        .figure img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .figure-caption {
+            font-size: 12px;
+            margin-top: 10px;
+            font-style: italic;
+        }
+
+        .references {
+            margin-top: 40px;
+            border-top: 1px solid #333;
+            padding-top: 20px;
+        }
+
+        .references-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        @media print {
+            body { margin: 0; padding: 20px; }
+            .paper-header { page-break-after: avoid; }
+            .code-cell, .figure { page-break-inside: avoid; }
+        }
+    </style>
+</head>
+<body>
+    <div class="paper-header">
+        <h1 class="paper-title">{{ notebook.metadata.title or "Research Paper" }}</h1>
+        {% if notebook.metadata.authors %}
+            <div class="paper-authors">{{ notebook.metadata.authors | join(", ") }}</div>
+        {% endif %}
+        {% if notebook.metadata.affiliation %}
+            <div class="paper-affiliation">{{ notebook.metadata.affiliation }}</div>
+        {% endif %}
+    </div>
+
+    {% if notebook.metadata.abstract %}
+        <div class="abstract">
+            <div class="abstract-title">Abstract</div>
+            {{ notebook.metadata.abstract | markdown | safe }}
+        </div>
+    {% endif %}
+
+    <div class="paper-content">
+        {% set section_counter = [1] %}
+        {% for cell in notebook.cells %}
+            {% if cell.cell_type == 'markdown' %}
+                <div class="cell markdown-cell" id="{{ cell | cell_id }}">
+                    {% set content = cell.source | markdown | safe %}
+                    {% if content.startswith('<h1>') %}
+                        {% set _ = section_counter.append(section_counter.pop() + 1) %}
+                        {{ content | replace('<h1>', '<h1><span class="section-number">' ~ section_counter[0] ~ '.</span> ') | safe }}
+                    {% else %}
+                        {{ content }}
+                    {% endif %}
+                </div>
+            {% elif cell.cell_type == 'code' %}
+                <div class="cell code-cell" id="{{ cell | cell_id }}">
+                    <div class="code-input">
+                        <pre>{{ cell.source }}</pre>
+                    </div>
+                    {% if cell.outputs %}
+                        {% for output in cell.outputs %}
+                            <div class="cell-output">
+                                {{ output | render_output | safe }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+
+    {% if notebook.metadata.references %}
+        <div class="references">
+            <div class="references-title">References</div>
+            {{ notebook.metadata.references | markdown | safe }}
+        </div>
+    {% endif %}
+</body>
+</html>
