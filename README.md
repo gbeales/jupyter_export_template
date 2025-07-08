@@ -1,6 +1,6 @@
 # Jupyter Export Template
 
-A Python package that provides Jinja2 templates for exporting Jupyter notebooks to various formats with customizable styling and layouts.
+A Python package that provides Jinja2 templates for exporting Jupyter notebooks to various formats with customizable styling and layouts.  Initial version made with the help of GitHub Copilot--still confirming all features work as the (auto-generated) documentation claims.
 
 ## Features
 

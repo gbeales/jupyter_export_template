@@ -9,7 +9,7 @@ description = "A Jinja2 template system for exporting Jupyter notebooks"
 readme = "README.md"
 license = {text = "MIT"}
 authors = [
-    {name = "Your Name", email = "your.email@example.com"}
+    {name = "Graham Beales", email = "graham.beales@gmail.com"}
 ]
 classifiers = [
     "Development Status :: 3 - Alpha",
