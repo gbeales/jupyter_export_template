@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Template</title>
+</head>
+<body>
+    <h1>{{ nb.metadata.get('title', 'Test Notebook') }}</h1>
+    <p>Number of cells: {{ nb.cells | length }}</p>
+
+    {% for cell in nb.cells %}
+        <div>
+            <h3>Cell {{ loop.index }}</h3>
+            <p>Type: {{ cell.cell_type }}</p>
+            <pre>{{ cell.source }}</pre>
+        </div>
+    {% endfor %}
+</body>
+</html>

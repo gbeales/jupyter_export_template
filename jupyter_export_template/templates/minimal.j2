@@ -3,103 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ notebook.metadata.title or "Notebook" }}</title>
+    <title>{{ nb.metadata.get('title', 'Notebook') }}</title>
     <style>
+        /* Minimal Template Styles */
         body {
-            font-family: Arial, sans-serif;
-            line-height: 1.4;
-            max-width: 100%;
-            margin: 0;
-            padding: 10px;
-            background-color: #fff;
-            color: #000;
-            font-size: 14px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.5;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #ffffff;
+            color: #333333;
         }
 
-        h1, h2, h3, h4, h5, h6 {
-            margin: 15px 0 10px 0;
-            font-weight: bold;
+        h1 {
+            color: #2c3e50;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
         }
 
         .cell {
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
 
-        .code-input {
-            background-color: #f5f5f5;
-            border: 1px solid #ccc;
-            padding: 8px;
-            font-family: monospace;
-            font-size: 12px;
-            white-space: pre-wrap;
+        .cell-input {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 3px;
+            padding: 10px;
+            margin-bottom: 10px;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 13px;
+            overflow-x: auto;
         }
 
         .cell-output {
-            background-color: #fff;
-            border: 1px solid #ddd;
-            padding: 8px;
-            font-family: monospace;
-            font-size: 12px;
+            background-color: #ffffff;
+            border: 1px solid #dee2e6;
+            border-radius: 3px;
+            padding: 10px;
+            margin-top: 10px;
         }
 
-        .output-image {
+        .cell-output pre {
+            margin: 0;
+            white-space: pre-wrap;
+        }
+
+        .cell-output img {
             max-width: 100%;
             height: auto;
         }
 
-        .error-output {
-            background-color: #ffe6e6;
-            color: #d00;
+        .prompt {
+            color: #6c757d;
+            font-weight: bold;
+            margin-right: 10px;
         }
 
-        .stream-output {
-            background-color: #e6ffe6;
-            color: #060;
-        }
-
-        p {
-            margin: 8px 0;
-        }
-
-        ul, ol {
-            margin: 8px 0;
-            padding-left: 20px;
-        }
-
-        code {
-            background-color: #f0f0f0;
-            padding: 1px 3px;
-            font-family: monospace;
-        }
-
-        pre {
-            background-color: #f5f5f5;
-            padding: 8px;
-            overflow-x: auto;
-            border: 1px solid #ccc;
+        /* Responsive design */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
         }
     </style>
 </head>
 <body>
-    {% if notebook.metadata.title %}
-        <h1>{{ notebook.metadata.title }}</h1>
-    {% endif %}
+    <h1>{{ nb.metadata.get('title', 'Jupyter Notebook') }}</h1>
 
-    {% for cell in notebook.cells %}
+    {% for cell in nb.cells %}
         {% if cell.cell_type == 'markdown' %}
-            <div class="cell markdown-cell">
-                {{ cell.source | markdown | safe }}
+            <div class="cell markdown">
+                {{ cell.source | replace('\n', '<br>') }}
             </div>
         {% elif cell.cell_type == 'code' %}
-            <div class="cell code-cell">
-                <div class="code-input">{{ cell.source }}</div>
+            <div class="cell code">
+                {% if cell.source.strip() %}
+                    <div class="cell-input">
+                        <span class="prompt">In [{{ cell.execution_count or ' ' }}]:</span>
+                        <pre><code>{{ cell.source }}</code></pre>
+                    </div>
+                {% endif %}
+
                 {% if cell.outputs %}
                     {% for output in cell.outputs %}
                         <div class="cell-output">
-                            {{ output | render_output | safe }}
+                            <span class="prompt">Out[{{ cell.execution_count or ' ' }}]:</span>
+                            <pre>{{ output.get('text', '') }}</pre>
                         </div>
                     {% endfor %}
                 {% endif %}
+            </div>
+        {% elif cell.cell_type == 'raw' %}
+            <div class="cell raw">
+                <pre>{{ cell.source }}</pre>
             </div>
         {% endif %}
     {% endfor %}

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ notebook.metadata.title or "Notebook Export" }}</title>
+    <title>{{ nb.metadata.title or "Notebook Export" }}</title>
     <style>
         body {
             font-family: 'Times New Roman', serif;
@@ -136,44 +136,37 @@
 </head>
 <body>
     <div class="paper-header">
-        <h1 class="paper-title">{{ notebook.metadata.title or "Research Paper" }}</h1>
-        {% if notebook.metadata.authors %}
-            <div class="paper-authors">{{ notebook.metadata.authors | join(", ") }}</div>
+        <h1 class="paper-title">{{ nb.metadata.title or "Research Paper" }}</h1>
+        {% if nb.metadata.authors %}
+            <div class="paper-authors">{{ nb.metadata.authors | join(", ") }}</div>
         {% endif %}
-        {% if notebook.metadata.affiliation %}
-            <div class="paper-affiliation">{{ notebook.metadata.affiliation }}</div>
+        {% if nb.metadata.affiliation %}
+            <div class="paper-affiliation">{{ nb.metadata.affiliation }}</div>
         {% endif %}
     </div>
 
-    {% if notebook.metadata.abstract %}
+    {% if nb.metadata.abstract %}
         <div class="abstract">
             <div class="abstract-title">Abstract</div>
-            {{ notebook.metadata.abstract | markdown | safe }}
+            {{ nb.metadata.abstract | replace('\n', '<br>') }}
         </div>
     {% endif %}
 
     <div class="paper-content">
-        {% set section_counter = [1] %}
-        {% for cell in notebook.cells %}
+        {% for cell in nb.cells %}
             {% if cell.cell_type == 'markdown' %}
-                <div class="cell markdown-cell" id="{{ cell | cell_id }}">
-                    {% set content = cell.source | markdown | safe %}
-                    {% if content.startswith('<h1>') %}
-                        {% set _ = section_counter.append(section_counter.pop() + 1) %}
-                        {{ content | replace('<h1>', '<h1><span class="section-number">' ~ section_counter[0] ~ '.</span> ') | safe }}
-                    {% else %}
-                        {{ content }}
-                    {% endif %}
+                <div class="cell markdown-cell">
+                    {{ cell.source | replace('\n', '<br>') }}
                 </div>
             {% elif cell.cell_type == 'code' %}
-                <div class="cell code-cell" id="{{ cell | cell_id }}">
+                <div class="cell code-cell">
                     <div class="code-input">
                         <pre>{{ cell.source }}</pre>
                     </div>
                     {% if cell.outputs %}
                         {% for output in cell.outputs %}
                             <div class="cell-output">
-                                {{ output | render_output | safe }}
+                                <pre>{{ output.get('text', '') }}</pre>
                             </div>
                         {% endfor %}
                     {% endif %}
@@ -182,10 +175,10 @@
         {% endfor %}
     </div>
 
-    {% if notebook.metadata.references %}
+    {% if nb.metadata.references %}
         <div class="references">
             <div class="references-title">References</div>
-            {{ notebook.metadata.references | markdown | safe }}
+            {{ nb.metadata.references | replace('\n', '<br>') }}
         </div>
     {% endif %}
 </body>

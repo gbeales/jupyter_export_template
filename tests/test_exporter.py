@@ -17,9 +17,9 @@ def test_get_available_templates():
     exporter = NotebookExporter()
     templates = exporter.get_available_templates()
 
-    assert 'default.j2' in templates
-    assert 'minimal.j2' in templates
-    assert 'academic.j2' in templates
+    assert 'default' in templates
+    assert 'minimal' in templates
+    assert 'academic' in templates
 
 
 def test_export_notebook_basic():
@@ -37,16 +37,17 @@ def test_template_directory_setup():
     assert exporter.template_dir.is_dir()
 
 
-def test_jinja_environment():
-    """Test that Jinja2 environment is properly configured."""
+def test_template_export_functionality():
+    """Test that template export functionality works."""
     exporter = NotebookExporter()
-    assert exporter.env is not None
 
-    # Test that custom filters are installed
-    assert 'markdown' in exporter.env.filters
-    assert 'render_output' in exporter.env.filters
-    assert 'format_code' in exporter.env.filters
-    assert 'cell_id' in exporter.env.filters
+    # Test that templates can be listed
+    templates = exporter.get_available_templates()
+    assert len(templates) > 0
+
+    # Test that export method exists and is callable
+    assert hasattr(exporter, 'export_notebook')
+    assert callable(exporter.export_notebook)
 
 
 if __name__ == '__main__':

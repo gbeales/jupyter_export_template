@@ -12,8 +12,8 @@ from .exporter import NotebookExporter
 @click.argument('output_file', type=click.Path(path_type=Path), required=False)
 @click.option(
     '--template', '-t',
-    default='default.j2',
-    help='Template file to use for export (default: default.j2)'
+    default='default',
+    help='Template to use for export (default: default)'
 )
 @click.option(
     '--template-dir',

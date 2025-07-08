@@ -1,10 +1,11 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Notebook Export</title>
-    <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Notebook Export</title>
+<style>
         body {
             font-family: 'Times New Roman', serif;
             line-height: 1.8;
@@ -135,25 +136,16 @@
     </style>
 </head>
 <body>
-    <div class="paper-header">
-        <h1 class="paper-title">Research Paper</h1>
-    </div>
-
-
-    <div class="paper-content">
-                <div class="cell markdown-cell" id="a797bb44">
-                        <h1><span class="section-number">2.</span> Jupyter Export Template Test Notebook</h1>
-<p>This notebook demonstrates the functionality of the <strong>jupyter-export-template</strong> package. It contains various types of cells and outputs to test the Jinja2 template export system.</p>
-<h2>Overview</h2>
-<p>The jupyter-export-template package allows you to:
-- Export Jupyter notebooks using custom Jinja2 templates
-- Create beautiful HTML outputs with custom styling
-- Support multiple export formats
-- Easily customize the appearance of exported notebooks</p>
+<div class="paper-header">
+<h1 class="paper-title">Research Paper</h1>
+</div>
+<div class="paper-content">
+<div class="cell markdown-cell">
+                    # Jupyter Export Template Test Notebook<br/><br/>This notebook demonstrates the functionality of the **jupyter-export-template** package. It contains various types of cells and outputs to test the Jinja2 template export system.<br/><br/>## Overview<br/><br/>The jupyter-export-template package allows you to:<br/>- Export Jupyter notebooks using custom Jinja2 templates<br/>- Create beautiful HTML outputs with custom styling<br/>- Support multiple export formats<br/>- Easily customize the appearance of exported notebooks
                 </div>
-                <div class="cell code-cell" id="90b36a2a">
-                    <div class="code-input">
-                        <pre># Import required libraries for testing
+<div class="cell code-cell">
+<div class="code-input">
+<pre># Import required libraries for testing
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -165,24 +157,21 @@ print("Libraries imported successfully!")
 print(f"Current date and time: {datetime.now()}")
 print(f"NumPy version: {np.__version__}")
 print(f"Pandas version: {pd.__version__}")</pre>
-                    </div>
+</div>
+<div class="cell-output">
+<pre>Libraries imported successfully!
+Current date and time: 2025-07-07 21:48:05.736885
+NumPy version: 2.3.1
+Pandas version: 2.3.1
+</pre>
+</div>
+</div>
+<div class="cell markdown-cell">
+                    ## Data Analysis Section<br/><br/>This section demonstrates various data analysis capabilities and how they appear in the exported templates.<br/><br/>### Key Features to Test:<br/>1. **Code execution** with outputs<br/>2. **Data visualization** with matplotlib<br/>3. **Pandas DataFrames** with formatted output<br/>4. **Mathematical expressions** and equations<br/>5. **Error handling** and traceback display<br/><br/>Let's start with some basic data manipulation:
                 </div>
-                <div class="cell markdown-cell" id="684f674e">
-                        <h2>Data Analysis Section</h2>
-<p>This section demonstrates various data analysis capabilities and how they appear in the exported templates.</p>
-<h3>Key Features to Test:</h3>
-<ol>
-<li><strong>Code execution</strong> with outputs</li>
-<li><strong>Data visualization</strong> with matplotlib</li>
-<li><strong>Pandas DataFrames</strong> with formatted output</li>
-<li><strong>Mathematical expressions</strong> and equations</li>
-<li><strong>Error handling</strong> and traceback display</li>
-</ol>
-<p>Let's start with some basic data manipulation:</p>
-                </div>
-                <div class="cell code-cell" id="1cad63f8">
-                    <div class="code-input">
-                        <pre># Create sample data for demonstration
+<div class="cell code-cell">
+<div class="code-input">
+<pre># Create sample data for demonstration
 np.random.seed(42)
 
 # Generate sample dataset
@@ -200,11 +189,31 @@ print("=" * 40)
 display(df)
 print(f"\nDataFrame shape: {df.shape}")
 print(f"Data types:\n{df.dtypes}")</pre>
-                    </div>
-                </div>
-                <div class="cell code-cell" id="cb7236db">
-                    <div class="code-input">
-                        <pre># Create visualizations to test image output
+</div>
+<div class="cell-output">
+<pre>Sample DataFrame:
+========================================
+</pre>
+</div>
+<div class="cell-output">
+<pre></pre>
+</div>
+<div class="cell-output">
+<pre>
+DataFrame shape: (5, 5)
+Data types:
+Name         object
+Age           int64
+Score         int32
+Category     object
+Value       float64
+dtype: object
+</pre>
+</div>
+</div>
+<div class="cell code-cell">
+<div class="code-input">
+<pre># Create visualizations to test image output
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
 
 # Bar plot
@@ -227,27 +236,39 @@ plt.show()
 print("\nStatistical Summary:")
 print("=" * 30)
 print(df.describe())</pre>
-                    </div>
+</div>
+<div class="cell-output">
+<pre></pre>
+</div>
+<div class="cell-output">
+<pre>
+Statistical Summary:
+==============================
+             Age      Score      Value
+count   5.000000   5.000000    5.00000
+mean   30.000000  81.400000  104.22800
+std     3.807887  12.074767   13.02419
+min    25.000000  67.000000   92.96000
+25%    28.000000  74.000000   96.49000
+50%    30.000000  80.000000   96.49000
+75%    32.000000  88.000000  111.51000
+max    35.000000  98.000000  123.69000
+</pre>
+</div>
+</div>
+<div class="cell markdown-cell">
+                    ## Mathematical Expressions and Calculations<br/><br/>This section demonstrates how mathematical content is rendered in exported notebooks.<br/><br/>### Mathematical Formula Example<br/><br/>The quadratic formula is: $x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$<br/><br/>For a quadratic equation $ax^2 + bx + c = 0$, we can calculate the discriminant and roots:<br/><br/>$$\Delta = b^2 - 4ac$$<br/><br/>Let's implement this calculation:
                 </div>
-                <div class="cell markdown-cell" id="47083eac">
-                        <h2>Mathematical Expressions and Calculations</h2>
-<p>This section demonstrates how mathematical content is rendered in exported notebooks.</p>
-<h3>Mathematical Formula Example</h3>
-<p>The quadratic formula is: $x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$</p>
-<p>For a quadratic equation $ax^2 + bx + c = 0$, we can calculate the discriminant and roots:</p>
-<p>$$\Delta = b^2 - 4ac$$</p>
-<p>Let's implement this calculation:</p>
-                </div>
-                <div class="cell code-cell" id="95293dd6">
-                    <div class="code-input">
-                        <pre>def solve_quadratic(a, b, c):
+<div class="cell code-cell">
+<div class="code-input">
+<pre>def solve_quadratic(a, b, c):
     """Solve quadratic equation ax^2 + bx + c = 0"""
     discriminant = b**2 - 4*a*c
 
     print(f"Equation: {a}x² + {b}x + {c} = 0")
     print(f"Discriminant (Δ): {discriminant}")
 
-    if discriminant > 0:
+    if discriminant &gt; 0:
         x1 = (-b + np.sqrt(discriminant)) / (2*a)
         x2 = (-b - np.sqrt(discriminant)) / (2*a)
         print(f"Two real roots: x₁ = {x1:.4f}, x₂ = {x2:.4f}")
@@ -272,18 +293,35 @@ solve_quadratic(1, -2, 1)  # x² - 2x + 1 = 0
 
 print("\nTest Case 3:")
 solve_quadratic(1, 0, 1)   # x² + 1 = 0</pre>
-                    </div>
+</div>
+<div class="cell-output">
+<pre>Test Case 1:
+Equation: 1x² + -5x + 6 = 0
+Discriminant (Δ): 1
+Two real roots: x₁ = 3.0000, x₂ = 2.0000
+
+Test Case 2:
+Equation: 1x² + -2x + 1 = 0
+Discriminant (Δ): 0
+One repeated root: x = 1.0000
+
+Test Case 3:
+Equation: 1x² + 0x + 1 = 0
+Discriminant (Δ): -4
+Complex roots: x₁ = 0.0000 + 1.0000i
+               x₂ = 0.0000 - 1.0000i
+</pre>
+</div>
+<div class="cell-output">
+<pre></pre>
+</div>
+</div>
+<div class="cell markdown-cell">
+                    ## Error Handling Demonstration<br/><br/>This section shows how errors and exceptions are displayed in the exported templates.<br/><br/>&gt; **Note**: The following cell intentionally contains an error to demonstrate error output formatting.
                 </div>
-                <div class="cell markdown-cell" id="0f76196d">
-                        <h2>Error Handling Demonstration</h2>
-<p>This section shows how errors and exceptions are displayed in the exported templates.</p>
-<blockquote>
-<p><strong>Note</strong>: The following cell intentionally contains an error to demonstrate error output formatting.</p>
-</blockquote>
-                </div>
-                <div class="cell code-cell" id="e02d69d7">
-                    <div class="code-input">
-                        <pre># This cell demonstrates error output formatting
+<div class="cell code-cell">
+<div class="code-input">
+<pre># This cell demonstrates error output formatting
 try:
     # Division by zero error
     result = 10 / 0
@@ -300,34 +338,19 @@ except IndexError as e:
     print(f"Index error caught: {e}")
 
 print("\nErrors have been handled gracefully!")</pre>
-                    </div>
-                </div>
-                <div class="cell markdown-cell" id="5fe57811">
-                        <h2>Conclusion</h2>
-<p>This test notebook demonstrates various features of the <strong>jupyter-export-template</strong> package:</p>
-<h3>Successfully Tested:</h3>
-<p>✅ <strong>Markdown rendering</strong> with headers, lists, and emphasis<br />
-✅ <strong>Code execution</strong> with visible output<br />
-✅ <strong>Data visualization</strong> with matplotlib plots<br />
-✅ <strong>DataFrame display</strong> with pandas<br />
-✅ <strong>Mathematical expressions</strong> and formulas<br />
-✅ <strong>Error handling</strong> and exception display  </p>
-<h3>Next Steps:</h3>
-<ol>
-<li><strong>Export this notebook</strong> using different templates</li>
-<li><strong>Customize templates</strong> based on specific needs  </li>
-<li><strong>Add more complex visualizations</strong> if needed</li>
-<li><strong>Test with different output formats</strong></li>
-</ol>
-<hr />
-<p><strong>Package Information:</strong>
-- <strong>Name</strong>: jupyter-export-template
-- <strong>Version</strong>: 0.1.0
-- <strong>Dependencies</strong>: jinja2, nbformat, click, pyyaml
-- <strong>Templates</strong>: default.j2, minimal.j2, academic.j2</p>
-<p>For more information, see the project documentation and README.md file.</p>
-                </div>
-    </div>
+</div>
+<div class="cell-output">
+<pre>Caught an error: division by zero
+This demonstrates how exceptions are handled and displayed.
+Index error caught: list index out of range
 
+Errors have been handled gracefully!
+</pre>
+</div>
+</div>
+<div class="cell markdown-cell">
+                    ## Conclusion<br/><br/>This test notebook demonstrates various features of the **jupyter-export-template** package:<br/><br/>### Successfully Tested:<br/>✅ **Markdown rendering** with headers, lists, and emphasis  <br/>✅ **Code execution** with visible output  <br/>✅ **Data visualization** with matplotlib plots  <br/>✅ **DataFrame display** with pandas  <br/>✅ **Mathematical expressions** and formulas  <br/>✅ **Error handling** and exception display  <br/><br/>### Next Steps:<br/>1. **Export this notebook** using different templates<br/>2. **Customize templates** based on specific needs  <br/>3. **Add more complex visualizations** if needed<br/>4. **Test with different output formats**<br/><br/>---<br/><br/>**Package Information:**<br/>- **Name**: jupyter-export-template<br/>- **Version**: 0.1.0<br/>- **Dependencies**: jinja2, nbformat, click, pyyaml<br/>- **Templates**: default.j2, minimal.j2, academic.j2<br/><br/>For more information, see the project documentation and README.md file.
+                </div>
+</div>
 </body>
 </html>

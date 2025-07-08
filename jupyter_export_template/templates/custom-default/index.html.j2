@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ nb.metadata.get('title', 'Notebook Export') }}</title>
     <style>
-        /* Default Template Styles */
+        /* Custom Default Template Styles */
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             line-height: 1.6;
@@ -136,9 +136,7 @@
         {% for cell in nb.cells %}
             {% if cell.cell_type == 'markdown' %}
                 <div class="cell markdown">
-                    <div class="cell-content">
-                        {{ cell.source | replace('\n', '<br>') }}
-                    </div>
+                    {{ cell.source | markdown }}
                 </div>
             {% elif cell.cell_type == 'code' %}
                 <div class="cell code">
@@ -153,7 +151,7 @@
                         {% for output in cell.outputs %}
                             <div class="cell-output">
                                 <span class="prompt">Out[{{ cell.execution_count or ' ' }}]:</span>
-                                <pre>{{ output.get('text', '') }}</pre>
+                                {{ output | render_output }}
                             </div>
                         {% endfor %}
                     {% endif %}
